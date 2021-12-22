@@ -23,7 +23,7 @@ RUN pip3 install \
 RUN git clone https://github.com/dubhater/vapoursynth-wwxd.git && \
     cd vapoursynth-wwxd && \
     gcc -o libwwxd.so -fPIC -shared -O2 -Wall -Wextra -Wno-unused-parameter $(pkg-config --cflags vapoursynth) src/wwxd.c src/detection.c && \
-    ln -s $(pwd)/libwwxd.so /lib/vapoursynth
+    ln -s $(pwd)/libwwxd.so /lib/vapoursynth/
 
 WORKDIR /root
 ENTRYPOINT [ "/bin/fish" ]
