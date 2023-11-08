@@ -5,7 +5,7 @@ from pathlib import Path
 import click
 from pysubs2 import SSAFile
 
-K_MATCH = re.compile(r"{\\k([123456]\d{2,}|[789]\d+)}([\w]+)([^{]*)( |$)")
+K_MATCH = re.compile(r"{\\k([12345]\d{2,}|[6789]\d+)}([\w]+)([^{]*)( |$)")
 
 
 def auto_kf(subs: SSAFile):
@@ -20,7 +20,9 @@ def auto_kf(subs: SSAFile):
             kf_duration = k_duration - new_k_duration
             space_k = r"{\k0}" if space == " " else ""
 
-            repl = rf"{{\k{new_k_duration}}}{content}{{\kf{kf_duration}}}~{extra}{space_k}{space}"
+            tilde = "" if (extra.startswith("…") or extra.startswith("...")) else "~"
+
+            repl = rf"{{\k{new_k_duration}}}{content}{{\kf{kf_duration}}}{tilde}{extra}{space_k}{space}"
 
             sub.text = sub.text.replace(match.group(0), repl)
     return subs
