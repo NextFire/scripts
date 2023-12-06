@@ -1,0 +1,9 @@
+#!/bin/sh
+MACOS=$(dirname "$0")
+CONTENTS=$(dirname "$MACOS")
+BUNDLE=$(dirname "$CONTENTS")
+
+cp /usr/local/bin/mpv $MACOS/mpv
+codesign --force --deep -s - $BUNDLE
+
+exec $MACOS/mpv "$@"
